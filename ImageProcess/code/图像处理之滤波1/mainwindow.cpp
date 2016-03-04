@@ -5,6 +5,7 @@
 #include <opencv.hpp>
 #include <QDebug>
 #include <QDir>
+#include <QMessageBox>
 using namespace  cv;
 using namespace  std;
 
@@ -27,7 +28,10 @@ void MainWindow::on_pushButton_clicked()
     imageFileName = QFileDialog::getOpenFileName(this, tr("选择图像"),
                     QDir::currentPath()
                     , tr("Images (*.jpg *.png *.xpm)"));
-    qDebug() << imageFileName;
+    if(imageFileName.isEmpty()){
+        QMessageBox::warning(this,"未选择文件","请选择图片！");
+        return;
+    }
     srcImageFile = imageFileName.toStdString();
     //qDebug()<<srcImageFile;
     Mat srcImage =  imread(srcImageFile, 1);
